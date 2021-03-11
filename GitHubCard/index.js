@@ -3,7 +3,14 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+import axios from "axios";
 
+axios 
+.get('https://api.github.com/users/RickyKlusmeier')
+.then((res) => {
+  cardMaker(res.data);
+  entryPoint.appendChild(cardMaker)
+});
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -30,6 +37,9 @@
 
 const followersArray = [];
 
+// followersArray.forEach((items) => 
+//   )
+
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -50,6 +60,44 @@ const followersArray = [];
     </div>
 */
 
+const entryPoint = document.querySelector('.cards')
+
+function cardMaker(cardObj) {
+
+const card = document.createElement('div');
+const img = document.createElement('img');
+const info = document.createElement('div');
+const name = document.createElement('h3');
+const username = document.createElement('p');
+const location = document.createElement('p');
+const profile = document.createElement('p')
+const link = document.createElement('a');
+const followers = document.createElement('p');
+const following = document.createElement('p');
+const bio = document.createElement('p');
+
+// img.src = {avatar_url};
+name.textContent = '${name}';
+username.textContent = '${username}';
+location.textContent = '${location}';
+// link.href = {url};
+followers.textContent = '${followers}';
+following.textContent = '${following}';
+bio.textContent = '${bio}';
+
+card.classList.add('card');
+info.classList.add('card-info');
+name.classList.add('name');
+username.classList.add('username');
+
+card.append(img, info);
+info.append(name, username, location, profile, followers, following, bio);
+profile.appendChild(link);
+
+return card;
+}
+
+entryPoint.appendChild('cardMaker')
 /*
   List of LS Instructors Github username's:
     tetondan
