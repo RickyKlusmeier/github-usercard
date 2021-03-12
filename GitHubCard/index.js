@@ -28,7 +28,6 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -58,3 +57,73 @@ const followersArray = [];
     luishrd
     bigknell
 */
+
+import axios from "axios"
+
+
+
+axios 
+.get('https://api.github.com/users/RickyKlusmeier')
+.then((res) => {
+  const entryPoint = document.querySelector('.cards')
+  const card = cardMaker(res.data)
+  entryPoint.appendChild(card);
+})
+.catch((res) => {
+  console.log(res)
+});
+
+const followersArray = [ 'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell'];
+
+followersArray.forEach((items) => {
+  axios
+  .get(`https://api.github.com/users/${items}`)
+  .then((res) => {
+  const entryPoint = document.querySelector('.cards');
+  const card1 = cardMaker(res.data)
+  entryPoint.appendChild(card1);
+  })
+  .catch((error) => {
+    console.log(error); 
+});
+});
+
+
+function cardMaker(cardObj) {
+
+const card = document.createElement('div');
+const img1 = document.createElement('img');
+const info = document.createElement('div');
+const name1 = document.createElement('h3');
+const username = document.createElement('p');
+const location = document.createElement('p');
+const profile = document.createElement('p')
+const link = document.createElement('a');
+const followers = document.createElement('p');
+const following = document.createElement('p');
+const bio = document.createElement('p');
+
+img1.setAttribute('src', cardObj.avatar_url);
+name1.textContent = cardObj.name;
+username.textContent = cardObj.username;
+location.textContent = `Location: ${cardObj.location}`;
+link.setAttribute('href', cardObj.html_url);
+link.textContent = `${cardObj.html_url}`;
+followers.textContent = `Followers ${cardObj.followers}`;
+following.textContent =`Following ${cardObj.following}`;
+bio.textContent = cardObj.bio;
+
+card.classList.add('card');
+info.classList.add('card-info');
+name1.classList.add('name');
+username.classList.add('username');
+
+card.append(img1, info);
+info.append(name1, username, location, profile, followers, following, bio, link);
+
+return card
+}
